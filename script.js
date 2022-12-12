@@ -17,6 +17,25 @@ const monsterStats = document.querySelector("#monsterStats");
 const monsterNameText = document.querySelector("#monsterName");
 const monsterHealthText = document.querySelector("#monsterHealth");
 
+const weapons = [
+  {
+    name: "stick",
+    power: 5
+  },
+  {
+    name: "dagger",
+    power: 30
+  },
+  {
+    name: "claw hammer",
+    power: 50
+  },
+  {
+    name: "sword",
+    power: 100
+  },
+];
+
 const locations = [
   {
     name: "town square",
@@ -29,6 +48,12 @@ const locations = [
     "button text": ["Buy 10 health (10 gold)", "Buy weapon (30 gold)", "Go to town square"],
     "button functions": [buyHealth, buyWeapon, goToTownSquare],
     text: "You entered the store."
+  },
+  {
+    name: "cave",
+    "button text": ["Fight slime", "Fight fanged beast", "Run"],
+    "button functions": [fightSlime, fightBeast, goToTownSquare],
+    text: "You entered the cave. Monsters surround you."
   }
 ];
 
@@ -49,25 +74,65 @@ function update(location) {
   button3.onclick = location["button functions"][2];
 }
 
-function goStore() {
-  update(locations[1]);
-}
-
-function buyHealth() {
-  healthText.innerText += 10;
-  goldText.innerText -= 10;
-}
-
-function buyWeapon() {
-
-}
-
 function goToTownSquare() {
   update(locations[0]);
 }
 
+function goStore() {
+  update(locations[1]);
+}
+
 function goCave() {
-  console.log("Going to cave.");
+  update(locations[2]);
+}
+
+function buyHealth() {
+  if (gold >= 10) {
+    health += 10;
+    gold -= 10;
+    healthText.innerText = health;
+    goldText.innerText = gold;
+    text.innerText = "You feel rejuvenated! +10 health!"
+  } else {
+    text.innerText = "Not enough gold for health!";
+  }
+}
+
+function buyWeapon() {
+  if (currentWeapon < weapons.length - 1) {
+    if (gold >= 30) {
+      gold -= 30;
+      goldText.innerText = gold;
+      currentWeapon++;
+
+      let newWeapon = weapons[currentWeapon].name;
+      inventory.push(newWeapon);
+
+      text.innerText = "You now have a " + newWeapon + ". " +
+        "In your inventory you have: " + inventory;
+    } else {
+      text.innerText = "Not enough gold for new weapons!";
+    }
+  } else {
+    text.innerText = "You already have the most powerful weapon.";
+    button2.innerText = "Sell weapon for 15 gold";
+    button2.onclick = sellWeapon;
+  }
+}
+
+function sellWeapon() {
+  if (inventory.length > 1) {
+    gold += 15;
+    goldText.innerText = gold;
+  }
+}
+
+function fightSlime() {
+
+}
+
+function fightBeast() {
+
 }
 
 function fightDragon() {
