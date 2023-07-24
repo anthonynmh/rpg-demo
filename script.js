@@ -110,7 +110,7 @@ function goInfirmary() {
 }
 
 function fightSlime() {
-  monsterStats.remove("display");
+  monsterStats.style.display = "block";
 
   monsterAttack = 5;
   monsterHealth = 100;
