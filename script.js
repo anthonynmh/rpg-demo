@@ -122,9 +122,9 @@ function fightSlime() {
 
 function fightBeast() {
   monsterStats.style.display = "block";
-  
-  monsterAttack = 20;
-  monsterHealth = 200;
+
+  monsterAttack = 15;
+  monsterHealth = 150;
   monsterNameText.innerText = "beasty";
   monsterHealthText.innerText = monsterHealth;
 
@@ -173,21 +173,19 @@ function sellWeapon() {
 }
 
 function attack() {
-  if (health <= 0) {
-    monsterStats.style.display = "none";
-    goInfirmary();
-  } 
-
   monsterHealth -= weapons[currentWeapon].power;
-  text.innerText = "Attack! Dealt " + weapons[currentWeapon].power + " damage! It attacks you with " + monsterAttack + "damage.";
+  text.innerText = "Attack! Dealt " + weapons[currentWeapon].power + " damage! It attacks you with " + monsterAttack + " damage.";
   monsterHealthText.innerText = monsterHealth;
   health -= monsterAttack;
   healthText.innerText = health;
 
-  if (monsterHealth <= 0) {
-    text.innerText = "You have defeated the enemy." + " You have earned 20 Gold.";
+  if (health <= 0) {
     monsterStats.style.display = "none";
-    gold += 20;
+    goInfirmary();
+  } else if (monsterHealth <= 0) {
+    monsterStats.style.display = "none";
+    text.innerText = "You have defeated the enemy." + " You have earned 40 Gold.";
+    gold += 40;
     goldText.innerText = gold;
     goCave();
   }
@@ -209,8 +207,8 @@ function fightDragon() {
 
 function reset() {
   health = 100;
-  gold = 50;
-  currentWeapon = 0;
+  gold -= 10;
+  goldText.innerText = gold;
 
   goToTownSquare();
 }
