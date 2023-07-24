@@ -121,6 +121,8 @@ function fightSlime() {
 }
 
 function fightBeast() {
+  monsterStats.style.display = "block";
+  
   monsterAttack = 20;
   monsterHealth = 200;
   monsterNameText.innerText = "beasty";
