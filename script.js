@@ -4,6 +4,7 @@ let gold = 50;
 let currentWeapon = 0;
 let fighting;
 let monsterHealth;
+let monsterAttack;
 let inventory = ["stick"];
 
 const button1 = document.querySelector("#button1");
@@ -54,6 +55,24 @@ const locations = [
     "button text": ["Fight slime", "Fight fanged beast", "Run"],
     "button functions": [fightSlime, fightBeast, goToTownSquare],
     text: "You entered the cave. Monsters surround you."
+  },
+  {
+    name: "infirmary",
+    "button text": ["Pay for healthcare (10 gold)", " ", " "],
+    "button functions": [reset, null, null],
+    text: "You fainted during the intense fight. Try again next time."
+  },
+  {
+    name: "slime hole",
+    "button text": ["Attack", "Block", "Run"],
+    "button functions": [attack, block, run],
+    text: "You engage the slime."
+  },
+  {
+    name: "Beast arena",
+    "button text": ["Attack", "Block", "Run"],
+    "button functions": [attack, block, run],
+    text: "You engage the beast."
   }
 ];
 
@@ -84,6 +103,28 @@ function goStore() {
 
 function goCave() {
   update(locations[2]);
+}
+
+function goInfirmary() {
+  update(locations[3]);
+}
+
+function fightSlime() {
+  monsterAttack = 5;
+  monsterHealth = 100;
+  monsterNameText.innerHTML = "slimey";
+  monsterHealthText.innerText = monsterHealth;
+
+  update(locations[4]);
+}
+
+function fightBeast() {
+  monsterAttack = 20;
+  monsterHealth = 200;
+  monsterNameText.innerHTML = "beasty";
+  monsterHealthText.innerText = monsterHealth;
+
+  update(locations[5]);
 }
 
 function buyHealth() {
@@ -127,14 +168,49 @@ function sellWeapon() {
   }
 }
 
-function fightSlime() {
+function attack() {
+  if (health <= 0) {
+    goInfirmary();
+  } 
 
+  monsterHealth -= weapons[currentWeapon].power;
+  console.log("Attack! Dealt " + weapons[currentWeapon].power + " damage!");
+  monsterHealthText.innerText = monsterHealth;
+
+  if (monsterHealth <= 0) {
+    console.log("You have defeated the enemy.");
+    console.log("You have earned 20 Gold.");
+    gold += 20;
+    goldText.innerText = gold;
+    goCave();
+  }
+  
+  console.log(" ");
+  
+  console.log("Attacking you, dealing " + monsterAttack + "damage.");
+  health -= monsterAttack;
+  healthText.innerText = health;
 }
 
-function fightBeast() {
+function block() {
+  console.log("You blocked the attack, mostly.");
+  console.log("Attacking you, dealing " + (monsterAttack / 2) + "damage.");
+  health -= monsterAttack / 2;
+  healthText.innerText = health;
+}
 
+function run() {
+  goToTownSquare();
 }
 
 function fightDragon() {
   console.log("Fighting dragon.");
+}
+
+function reset() {
+  health = 100;
+  gold = 50;
+  currentWeapon = 0;
+
+  goToTownSquare();
 }
