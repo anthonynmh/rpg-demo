@@ -110,6 +110,8 @@ function goInfirmary() {
 }
 
 function fightSlime() {
+  monsterStats.remove("display");
+
   monsterAttack = 5;
   monsterHealth = 100;
   monsterNameText.innerText = "slimey";
@@ -174,8 +176,10 @@ function attack() {
   } 
 
   monsterHealth -= weapons[currentWeapon].power;
-  text.innerText = "Attack! Dealt " + weapons[currentWeapon].power + " damage!";
+  text.innerText = "Attack! Dealt " + weapons[currentWeapon].power + " damage! It attacks you with " + monsterAttack + "damage.";
   monsterHealthText.innerText = monsterHealth;
+  health -= monsterAttack;
+  healthText.innerText = health;
 
   if (monsterHealth <= 0) {
     text.innerText = "You have defeated the enemy." + " You have earned 20 Gold.";
@@ -183,15 +187,10 @@ function attack() {
     goldText.innerText = gold;
     goCave();
   }
-  
-  text.innerText = "Attacking you, dealing " + monsterAttack + "damage.";
-  health -= monsterAttack;
-  healthText.innerText = health;
 }
 
 function block() {
-  console.log("You blocked the attack, mostly.");
-  console.log("Attacking you, dealing " + (monsterAttack / 2) + "damage.");
+  text.innerText = "You blocked the attack, mostly. " + "It attacks you, dealing " + (monsterAttack / 2) + "damage.";
   health -= monsterAttack / 2;
   healthText.innerText = health;
 }
