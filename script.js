@@ -112,7 +112,7 @@ function goInfirmary() {
 function fightSlime() {
   monsterAttack = 5;
   monsterHealth = 100;
-  monsterNameText.innerHTML = "slimey";
+  monsterNameText.innerText = "slimey";
   monsterHealthText.innerText = monsterHealth;
 
   update(locations[4]);
@@ -121,7 +121,7 @@ function fightSlime() {
 function fightBeast() {
   monsterAttack = 20;
   monsterHealth = 200;
-  monsterNameText.innerHTML = "beasty";
+  monsterNameText.innerText = "beasty";
   monsterHealthText.innerText = monsterHealth;
 
   update(locations[5]);
