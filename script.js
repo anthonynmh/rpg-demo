@@ -174,20 +174,17 @@ function attack() {
   } 
 
   monsterHealth -= weapons[currentWeapon].power;
-  console.log("Attack! Dealt " + weapons[currentWeapon].power + " damage!");
+  text.innerText = "Attack! Dealt " + weapons[currentWeapon].power + " damage!";
   monsterHealthText.innerText = monsterHealth;
 
   if (monsterHealth <= 0) {
-    console.log("You have defeated the enemy.");
-    console.log("You have earned 20 Gold.");
+    text.innerText = "You have defeated the enemy." + " You have earned 20 Gold.";
     gold += 20;
     goldText.innerText = gold;
     goCave();
   }
   
-  console.log(" ");
-  
-  console.log("Attacking you, dealing " + monsterAttack + "damage.");
+  text.innerText = "Attacking you, dealing " + monsterAttack + "damage.";
   health -= monsterAttack;
   healthText.innerText = health;
 }
