@@ -172,6 +172,7 @@ function sellWeapon() {
 
 function attack() {
   if (health <= 0) {
+    monsterStats.style.display = "none";
     goInfirmary();
   } 
 
@@ -183,6 +184,7 @@ function attack() {
 
   if (monsterHealth <= 0) {
     text.innerText = "You have defeated the enemy." + " You have earned 20 Gold.";
+    monsterStats.style.display = "none";
     gold += 20;
     goldText.innerText = gold;
     goCave();
