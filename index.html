@@ -9,26 +9,47 @@
 
   <body>
     <div id="game">
-      <div id="stats">
-        <span class="stat">XP: <strong><span id="xpText">0</span></strong></span>
-        <span class="stat">Health: <strong><span id="healthText">100</span></strong></span>
-        <span class="stat">Gold: <strong><span id="goldText">50</span></strong></span>
+      <div id="player-stats">
+        <div>
+          <span class="stat">HP: <strong><span id="hpText">100</span></strong></span>
+          <span class="stat">Gold: <strong><span id="goldText">0</span></strong></span>
+          <span class="stat">XP: <strong><span id="xpText">0</span></strong></span>
+          <span class="stat">Level: <strong><span id="levelText">1</span></strong></span>
+        </div>
+        
+        <div>
+          <span class="stat">Current Weapon: <strong><span id="currentWeaponText">1</span></strong></span>
+          <span class="stat">Attack Damage: <strong><span id="attackDamageText">10</span></strong></span>
+          <span class="stat">Armour Power: <strong><span id="armourPowerText">0</span></strong></span>
+        </div>
+
+        <div>
+          <span class="stat">Location: <strong><span id="locationText">Intersection</span></strong></span>
+        </div>
+        
+        <div>
+          <span class="stat">Number of items: <strong><span id="inventoryText">0</span></strong></span>
+        </div>
       </div>
-      <div id="controls">
-        <button id="button1">Go to store</button>
-        <button id="button2">Go to cave</button>
-        <button id="button3">Fight dragon</button>
-      </div>
-      <div id="monsterStats">
+
+      <div id="monster-stats">
         <span class="stat">Monster Name: <strong><span id="monsterName"></span></strong></span>
         <span class="stat">Health: <strong><span id="monsterHealth"></span></strong></span>
       </div>
+
+      <div id="controls">
+        <button id="button1">Go to Town Square</button>
+        <button id="button2">Go to Monster Mines</button>
+        <button id="button3">Go to Dragon's Den</button>
+        <button id="button4">Go to the Pier</button>
+      </div>
+
       <div id="text">
-        Welcome to Dragon Repeller.
-        You must defeat the dragon that is preventing people from leaving the town.
-        You are in the town square.
-        Where do you want to go?
-        Use the buttons above.
+        Welcome to RhyneSvill.<br />
+        You must defeat the dragon that is preventing people from leaving the town.<br />
+        You are in the town's intersection.<br />
+        Where do you want to go?<br />
+        Use the buttons above.<br />
       </div>
     </div>
     <script  src="script.js"></script>
