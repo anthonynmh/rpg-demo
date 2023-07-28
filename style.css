@@ -1,5 +1,35 @@
+* {
+  /* outline: 1px dotted red; */
+}
+
 body {
   background-color: darkblue;
+}
+
+#weapon-and-ui {
+  display: flex;
+  justify-content: center;
+}
+
+#weaponInventory, #currentLocation{
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-right: 20px;
+  border: 5px solid black;
+  background-color: lightgray;
+}
+
+#weaponInventory > button {
+  margin: 0px auto 0px auto;
+  border-radius: 10px;
+  width: 100px
+}
+
+.currentWeaponText {
+  background-color: lightgray;
+  color: black;
+  margin: 10px
 }
 
 #text {
@@ -42,4 +72,10 @@ body {
 #locationText {
   color: red;
   border: 1px solid red;
+}
+
+#resetButton {
+  float: right;
+  margin: 20px;
+  font-size: large;
 }

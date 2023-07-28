@@ -1,11 +1,12 @@
 let xp = 0;
 let health = 100;
-let gold = 50;
+let gold = 500;
 let currentWeapon = 0;
+let lastWeapon = 0;
 let currentArmour = 0;
 let monsterHealth;
 let monsterAttack;
-let inventory = [" "];
+let inventory = [];
 
 // player stats
 const hpText = document.querySelector("#hpText");
@@ -28,27 +29,39 @@ const button1 = document.querySelector("#button1");
 const button2 = document.querySelector("#button2");
 const button3 = document.querySelector("#button3");
 const button4 = document.querySelector("#button4");
+const nextWeaponButton = document.querySelector("#nextWeapon");
+const prevWeaponButton = document.querySelector("#prevWeapon");
+const resetButton = document.querySelector("#resetButton");
 
 // text
 const text = document.querySelector("#text");
 
 const weapons = [
   {
+    name: "Fists",
+    power: 5,
+    text: "Equipped your 'ol Fists."
+  },
+  {
     name: "Stick",
-    power: 5
+    power: 10,
+    text: "Equipped a trusty Stick."
   },
   {
     name: "Dagger",
-    power: 30
+    power: 30,
+    text: "Equipped a lil cute Dagger."
   },
   {
     name: "Rusty Sword",
-    power: 50
+    power: 50,
+    text: "Equipped Rusty Sword. Hope it doesn't break ;)"
   },
   {
     name: "Hunter's Sword",
-    power: 100
-  },
+    power: 100,
+    text: "Equipped the Hunter's Sword. Perfect for a Dragon Slayer like yourself."
+  }
 ];
 
 const locations = [
@@ -74,31 +87,31 @@ const locations = [
     name: "Armour Store",
     "button text": ["Buy armour (25 gold)", "Sell armour", "Exit store", " "],
     "button functions": [buyArmour, sellArmour, goToTownSquare, null],
-    text: "You entered the armour store."
+    text: "You entered the armour store. [This area is still in development]."
   },
   {
     name: "Infirmary",
     "button text": ["Buy HP (20 gold)", "Exit store", " ", " "],
     "button functions": [buyHp, goToTownSquare, null, null],
-    text: "You entered the Infirmary."
+    text: "You entered the Infirmary. [This area is still in development]."
   },
   {
     name: "Monster Mines",
     "button text": ["Fight monsters", "Turn around", " ", " "],
     "button functions": [fightMonsters, goToIntersection, null, null],
-    text: "You stand in front of Monster Mines. Monsters begin to swarm you."
+    text: "You stand in front of Monster Mines. Monsters begin to swarm you. [This area is still in development]."
   },
   {
     name: "Dragon's Den",
     "button text": ["Fight Dragon", "Turn around", " ", " "],
     "button functions": [fightDragon, goToIntersection, null, null],
-    text: "You stand in front of the Dragon's Den. You feel bad aura from the inside."
+    text: "You stand in front of the Dragon's Den. You feel bad aura from the inside. [This area is still in development]."
   },
   {
     name: "Pier",
     "button text": ["Return to Intersection", " ", " ", " "],
     "button functions": [goToIntersection, null, null, null],
-    text: "You are at the nicest pier you have ever seen."
+    text: "You are at the nicest pier you have ever seen. [This area is still in development]."
   }
 ];
 
@@ -107,7 +120,33 @@ button1.onclick = goToTownSquare;
 button2.onclick = goToMonsterMines;
 button3.onclick = goToDragonDen;
 button4.onclick = goToPier;
+nextWeaponButton.onclick = nextWeapon;
+prevWeaponButton.onclick = prevWeapon;
 
+inventory.push(weapons[lastWeapon].name);
+
+// weapon selectors
+function nextWeapon() {
+  if (currentWeapon == lastWeapon) {
+    alert("No next weapon!");
+  } else {
+    currentWeapon++;
+    currentWeaponText.innerText = weapons[currentWeapon].name;
+    // text.innerText += weapons[currentWeapon]["text"];
+  }
+}
+
+function prevWeapon() {
+  if (currentWeapon == 0) {
+    alert("No previous weapon!");
+  } else {
+    currentWeapon--;
+    currentWeaponText.innerText = weapons[currentWeapon].name;
+    // text.innerText += weapons[currentWeapon]["text"];
+  }
+}
+
+// goTo functions
 function update(location) {
   button1.innerText = location["button text"][0];
   button2.innerText = location["button text"][1];
@@ -123,7 +162,6 @@ function update(location) {
   button4.onclick = location["button functions"][3];
 }
 
-// goTo functions
 function goToIntersection() {
   update(locations[0]);
 } 
@@ -170,17 +208,20 @@ function buyHp() {
 }
 
 function buyWeapon() {
-  if (currentWeapon < weapons.length - 1) {
+  if (lastWeapon < weapons.length - 1) {
     if (gold >= 30) {
       gold -= 30;
       goldText.innerText = gold;
-      currentWeapon++;
+      lastWeapon++;
+      currentWeapon = lastWeapon;
 
-      let newWeapon = weapons[currentWeapon].name;
+      let newWeapon = weapons[lastWeapon].name;
       inventory.push(newWeapon);
 
       text.innerText = "You now have a " + newWeapon + ". " +
         "In your inventory you have: " + inventory;
+
+    currentWeaponText.innerText = weapons[lastWeapon].name;
     } else {
       text.innerText = "Not enough gold for new weapons!";
     }
@@ -209,28 +250,6 @@ function sellArmour() {
 // combat functions
 function fightMonsters() {
 
-}
-
-function fightSlime() {
-  monsterStats.style.display = "block";
-
-  monsterAttack = 5;
-  monsterHealth = 100;
-  monsterNameText.innerText = "slimey";
-  monsterHealthText.innerText = monsterHealth;
-
-  update(locations[4]);
-}
-
-function fightBeast() {
-  monsterStats.style.display = "block";
-
-  monsterAttack = 15;
-  monsterHealth = 150;
-  monsterNameText.innerText = "beasty";
-  monsterHealthText.innerText = monsterHealth;
-
-  update(locations[5]);
 }
 
 function attack() {
@@ -269,8 +288,9 @@ function run() {
 
 function reset() {
   health = 100;
-  gold -= 10;
+  gold = 50;
   goldText.innerText = gold;
+  inventory = [" "];
 
-  goToTownSquare();
+  goToIntersection();
 }
